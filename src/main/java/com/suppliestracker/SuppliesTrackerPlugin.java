@@ -107,6 +107,7 @@ public class SuppliesTrackerPlugin extends Plugin
 	private static final String TELEPORT_PATTERN = "^teleport";
 	private static final String TELETAB_PATTERN = "^break";
 	private static final String SPELL_PATTERN = "^cast|^grand\\sexchange|^outside|^seers|^yanille";
+	private static final String POT_SHARE_CAST_PATTERN = "->";
 
 	//Equipment slot constants
 	private static final int EQUIPMENT_MAINHAND_SLOT = EquipmentInventorySlot.WEAPON.getSlotIdx();
@@ -177,6 +178,8 @@ public class SuppliesTrackerPlugin extends Plugin
 	private boolean ammoLoaded = false;
 	private boolean throwingAmmoLoaded = false;
 	private boolean mainHandThrowing = false;
+
+	private int potShareId = 0;
 
 	private int mainHand = 0;
 	private SuppliesTrackerPanel panel;
@@ -923,6 +926,12 @@ public class SuppliesTrackerPlugin extends Plugin
 				MenuAction newAction = new MenuAction(CAST, old.getItems());
 				actionStack.push(newAction);
 			}
+
+			Pattern potSharePattern = Pattern.compile(POT_SHARE_CAST_PATTERN);
+			if (potSharePattern.matcher(event.getMenuTarget().toLowerCase()).find())
+			{
+				potShareId = event.getId();
+			}
 		}
 
 		if (event.getMenuTarget().toLowerCase().equals("use"))
@@ -1101,6 +1110,10 @@ public class SuppliesTrackerPlugin extends Plugin
 			else if (event.getMessage().contains("Torfinn has retrieved some of your items."))
 			{
 				buildEntries(HEALER_ICON_22308);
+			}
+			else if (event.getMessage().contains("You used a dose on"))
+			{
+				buildEntries(potShareId);
 			}
 		}
 	}
