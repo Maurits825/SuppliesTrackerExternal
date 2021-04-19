@@ -85,7 +85,7 @@ public enum ItemType
 		{
 			return ItemType.RUNE;
 		}
-		else if (item.getName().toLowerCase().contains("teleport"))
+		else if (item.getName().toLowerCase().contains("teleport") || item.getName().toLowerCase().contains("basalt"))
 		{
 			return ItemType.TELEPORT;
 		}

@@ -106,6 +106,7 @@ public class SuppliesTrackerPlugin extends Plugin
 	private static final String DRINK_PATTERN = "^drink";
 	private static final String TELEPORT_PATTERN = "^teleport";
 	private static final String TELETAB_PATTERN = "^break";
+	private static final String BASALT_PATTERN = "^weiss|troll stronghold";
 	private static final String SPELL_PATTERN = "^cast|^grand\\sexchange|^outside|^seers|^yanille";
 
 	//Equipment slot constants
@@ -893,8 +894,10 @@ public class SuppliesTrackerPlugin extends Plugin
 		// Create pattern for teleport scrolls and tabs
 		Pattern teleportPattern = Pattern.compile(TELEPORT_PATTERN);
 		Pattern teletabPattern = Pattern.compile(TELETAB_PATTERN);
+		Pattern basaltPattern = Pattern.compile(BASALT_PATTERN);
 		if (teleportPattern.matcher(event.getMenuTarget().toLowerCase()).find() ||
-			teletabPattern.matcher(event.getMenuTarget().toLowerCase()).find())
+			teletabPattern.matcher(event.getMenuTarget().toLowerCase()).find() ||
+			basaltPattern.matcher(event.getMenuTarget().toLowerCase()).find())
 		{
 			old = client.getItemContainer(InventoryID.INVENTORY);
 
